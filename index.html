@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💌 Letter of Love</title>
+    <title>💌 Letter to P'Saint</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 30%, #1a0a2e 60%, #0d1b3e 100%);
+            background: linear-gradient(135deg, #0d0520 0%, #1a0a3e 30%, #0d0520 60%, #0a0d2e 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -45,8 +45,15 @@
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
-            10% { opacity: 1; }
-            90% { opacity: 0.8; }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
             100% {
                 transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
@@ -71,10 +78,213 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.3); }
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
         }
 
+        /* ─── Passcode Screen ─────────────────────────────── */
+        .passcode-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: opacity 0.6s ease;
+        }
+
+        .passcode-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .passcode-box {
+            background: linear-gradient(160deg, #1e0a3e 0%, #2a1060 50%, #1e0a3e 100%);
+            border: 1px solid rgba(180, 130, 220, 0.3);
+            border-radius: 24px;
+            padding: 40px 35px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow:
+                0 30px 80px rgba(100, 40, 180, 0.4),
+                0 0 0 1px rgba(180, 130, 220, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .passcode-icon {
+            font-size: 2.5rem;
+            animation: heart-beat 2s ease-in-out infinite;
+        }
+
+        .passcode-title {
+            color: #e8d5f9;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            opacity: 0.9;
+            text-shadow: 0 0 15px rgba(180, 130, 240, 0.4);
+        }
+
+        .passcode-subtitle {
+            color: rgba(200, 160, 240, 0.6);
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-align: center;
+            margin-top: -18px;
+        }
+
+        /* Dots display */
+        .passcode-dots {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .passcode-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(180, 130, 220, 0.5);
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-dot.filled {
+            background: #b07fd4;
+            border-color: #b07fd4;
+            box-shadow: 0 0 10px rgba(176, 127, 212, 0.6);
+            transform: scale(1.1);
+        }
+
+        .passcode-dot.error {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.6);
+        }
+
+        /* Shake animation on wrong passcode */
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            15% {
+                transform: translateX(-8px);
+            }
+
+            30% {
+                transform: translateX(8px);
+            }
+
+            45% {
+                transform: translateX(-6px);
+            }
+
+            60% {
+                transform: translateX(6px);
+            }
+
+            75% {
+                transform: translateX(-3px);
+            }
+
+            90% {
+                transform: translateX(3px);
+            }
+        }
+
+        .passcode-dots.shake {
+            animation: shake 0.5s ease;
+        }
+
+        /* Numpad */
+        .passcode-numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .num-btn {
+            background: rgba(155, 89, 182, 0.12);
+            border: 1px solid rgba(180, 130, 220, 0.2);
+            border-radius: 50%;
+            width: 68px;
+            height: 68px;
+            margin: 0 auto;
+            color: #e8d5f9;
+            font-size: 1.4rem;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .num-btn:hover {
+            background: rgba(155, 89, 182, 0.3);
+            border-color: rgba(180, 130, 220, 0.5);
+            transform: scale(1.05);
+        }
+
+        .num-btn:active {
+            background: rgba(155, 89, 182, 0.5);
+            transform: scale(0.95);
+        }
+
+        .num-btn.empty {
+            background: transparent;
+            border: none;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .num-btn.delete {
+            font-size: 1.1rem;
+            color: rgba(200, 160, 240, 0.7);
+        }
+
+        /* Error message */
+        .passcode-error {
+            color: #e74c3c;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            min-height: 18px;
+        }
+
+        .passcode-error.show {
+            opacity: 1;
+        }
+
+        /* ─── Main Scene ──────────────────────────────────── */
         .scene {
             position: relative;
             z-index: 10;
@@ -82,21 +292,36 @@
             flex-direction: column;
             align-items: center;
             gap: 30px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .scene.show {
+            opacity: 1;
+            pointer-events: all;
         }
 
         .title {
-            color: #f9d5e5;
+            color: #e8d5f9;
             font-size: 1.2rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             opacity: 0.8;
             animation: pulse-text 3s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(249, 213, 229, 0.5);
+            text-shadow: 0 0 20px rgba(180, 130, 240, 0.5);
         }
 
         @keyframes pulse-text {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         .envelope-wrapper {
@@ -105,16 +330,20 @@
             transition: transform 0.3s ease;
         }
 
-        .envelope-wrapper:hover { transform: scale(1.03); }
+        .envelope-wrapper:hover {
+            transform: scale(1.03);
+        }
 
-        .envelope-wrapper:hover .envelope-hint { opacity: 1; }
+        .envelope-wrapper:hover .envelope-hint {
+            opacity: 1;
+        }
 
         .envelope-hint {
             position: absolute;
             bottom: -35px;
             left: 50%;
             transform: translateX(-50%);
-            color: #f9d5e5;
+            color: #e8d5f9;
             font-size: 0.8rem;
             letter-spacing: 2px;
             opacity: 0;
@@ -126,25 +355,24 @@
             width: 340px;
             height: 240px;
             position: relative;
-            filter: drop-shadow(0 20px 60px rgba(255, 100, 150, 0.3));
+            filter: drop-shadow(0 20px 60px rgba(150, 80, 220, 0.35));
             transition: all 0.5s ease;
-        }
-
-        .envelope.opening .envelope-top {
-            animation: open-flap 0.8s ease forwards;
         }
 
         .envelope.opening .envelope-letter-peek {
             animation: peek-letter 1.2s ease 0.4s forwards;
         }
 
-        .envelope-svg { width: 100%; height: 100%; }
+        .envelope-svg {
+            width: 100%;
+            height: 100%;
+        }
 
         .envelope-letter-peek {
             position: absolute;
             width: 80%;
             height: 60%;
-            background: linear-gradient(135deg, #fff9f9, #fff5f8);
+            background: linear-gradient(135deg, #f9f5ff, #f3eeff);
             top: 10%;
             left: 10%;
             border-radius: 6px;
@@ -154,14 +382,16 @@
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes open-flap {
-            0% { transform: rotateX(0deg); }
-            100% { transform: rotateX(-180deg); }
-        }
-
         @keyframes peek-letter {
-            0% { transform: translateY(20px); opacity: 0; }
-            100% { transform: translateY(-30px); opacity: 1; }
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(-30px);
+                opacity: 1;
+            }
         }
 
         .card-overlay {
@@ -170,7 +400,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 5, 20, 0.85);
+            background: rgba(5, 2, 15, 0.85);
             backdrop-filter: blur(8px);
             z-index: 100;
             display: flex;
@@ -190,11 +420,11 @@
         .card {
             width: 100%;
             max-width: 1000px;
-            background: linear-gradient(160deg, #fff9fb 0%, #fff5f8 40%, #fef0f5 100%);
+            background: linear-gradient(160deg, #fdf9ff 0%, #f8f0ff 40%, #f3eaff 100%);
             border-radius: 20px;
             box-shadow:
-                0 30px 80px rgba(255, 100, 150, 0.3),
-                0 0 0 1px rgba(255, 180, 200, 0.3),
+                0 30px 80px rgba(140, 80, 220, 0.25),
+                0 0 0 1px rgba(180, 140, 230, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
             overflow: hidden;
             transform: translateY(60px) scale(0.9);
@@ -202,7 +432,9 @@
             position: relative;
         }
 
-        .card-overlay.show .card { transform: translateY(0) scale(1); }
+        .card-overlay.show .card {
+            transform: translateY(0) scale(1);
+        }
 
         .card-deco-top {
             position: absolute;
@@ -210,7 +442,7 @@
             left: 0;
             right: 0;
             height: 6px;
-            background: linear-gradient(90deg, #ff6b9d, #ff8fab, #ffc2d4, #ff8fab, #ff6b9d);
+            background: linear-gradient(90deg, #9b59b6, #b07fd4, #d4a8f0, #b07fd4, #9b59b6);
         }
 
         .card-corner {
@@ -221,30 +453,34 @@
         }
 
         .card-corner.tl {
-            top: 15px; left: 15px;
-            border-top: 2px solid #ff6b9d;
-            border-left: 2px solid #ff6b9d;
+            top: 15px;
+            left: 15px;
+            border-top: 2px solid #9b59b6;
+            border-left: 2px solid #9b59b6;
             border-radius: 8px 0 0 0;
         }
 
         .card-corner.tr {
-            top: 15px; right: 15px;
-            border-top: 2px solid #ff6b9d;
-            border-right: 2px solid #ff6b9d;
+            top: 15px;
+            right: 15px;
+            border-top: 2px solid #9b59b6;
+            border-right: 2px solid #9b59b6;
             border-radius: 0 8px 0 0;
         }
 
         .card-corner.bl {
-            bottom: 15px; left: 15px;
-            border-bottom: 2px solid #ff6b9d;
-            border-left: 2px solid #ff6b9d;
+            bottom: 15px;
+            left: 15px;
+            border-bottom: 2px solid #9b59b6;
+            border-left: 2px solid #9b59b6;
             border-radius: 0 0 0 8px;
         }
 
         .card-corner.br {
-            bottom: 15px; right: 15px;
-            border-bottom: 2px solid #ff6b9d;
-            border-right: 2px solid #ff6b9d;
+            bottom: 15px;
+            right: 15px;
+            border-bottom: 2px solid #9b59b6;
+            border-right: 2px solid #9b59b6;
             border-radius: 0 0 8px 0;
         }
 
@@ -257,14 +493,14 @@
         .card-from {
             font-size: 0.7rem;
             letter-spacing: 3px;
-            color: #ff8fab;
+            color: #a06dc8;
             text-transform: uppercase;
             margin-bottom: 5px;
         }
 
         .card-to {
             font-size: 1.6rem;
-            color: #c0394e;
+            color: #6b2d8b;
             font-style: italic;
             line-height: 1.2;
         }
@@ -281,26 +517,40 @@
             animation: heart-beat 1.5s ease-in-out infinite;
         }
 
-        .card-heart:nth-child(2) { animation-delay: 0.2s; }
-        .card-heart:nth-child(3) { animation-delay: 0.4s; }
+        .card-heart:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card-heart:nth-child(3) {
+            animation-delay: 0.4s;
+        }
 
         @keyframes heart-beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
         }
 
         .card-divider {
             margin: 0 25px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #ffc2d4, transparent);
+            background: linear-gradient(90deg, transparent, #d4a8f0, transparent);
         }
 
-        .carousel-section { padding: 20px 25px; }
+        .carousel-section {
+            padding: 20px 25px;
+        }
 
         .carousel-label {
             font-size: 0.65rem;
             letter-spacing: 2px;
-            color: #ff8fab;
+            color: #a06dc8;
             text-transform: uppercase;
             text-align: center;
             margin-bottom: 12px;
@@ -311,8 +561,8 @@
             border-radius: 14px;
             overflow: hidden;
             aspect-ratio: 4/3;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
-            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.2);
+            background: linear-gradient(135deg, #e8d5f9, #d4b8f0);
+            box-shadow: 0 8px 30px rgba(140, 80, 200, 0.2);
         }
 
         .carousel-track {
@@ -327,21 +577,32 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
             position: relative;
             overflow: hidden;
         }
 
-        .slide-1 { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
-        .slide-2 { background: linear-gradient(135deg, #fce4ec, #f48fb1); }
-        .slide-3 { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
-        .slide-4 { background: linear-gradient(135deg, #e0f7fa, #80deea); }
+        .slide-1 {
+            background: linear-gradient(135deg, #e8d5f9, #c39bd3);
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, #d7b8f5, #9b59b6);
+        }
+
+        .slide-3 {
+            background: linear-gradient(135deg, #ede0fa, #b39ddb);
+        }
+
+        .slide-4 {
+            background: linear-gradient(135deg, #f3e5f5, #ce93d8);
+        }
 
         .slide-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
+            width: max-content;
         }
 
         .slide-emoji {
@@ -350,31 +611,40 @@
         }
 
         @keyframes float-emoji {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .slide-caption {
             font-size: 0.85rem;
-            color: rgba(100, 40, 60, 0.7);
+            color: rgba(60, 20, 80, 0.75);
             font-style: italic;
             letter-spacing: 1px;
         }
 
-        .card-text-section { padding: 20px 25px 25px; }
+        .card-text-section {
+            padding: 20px 25px 25px;
+        }
 
         .card-text-label {
             font-size: 0.65rem;
             letter-spacing: 2px;
-            color: #ff8fab;
+            color: #a06dc8;
             text-transform: uppercase;
             margin-bottom: 15px;
             text-align: center;
         }
 
         .card-text-body {
-            background: linear-gradient(135deg, rgba(255, 235, 245, 0.6), rgba(255, 240, 248, 0.4));
-            border: 1px solid rgba(255, 194, 212, 0.4);
+            background: linear-gradient(135deg, rgba(232, 210, 250, 0.5), rgba(240, 220, 255, 0.35));
+            border: 1px solid rgba(180, 130, 220, 0.35);
             border-radius: 14px;
             padding: 20px;
             position: relative;
@@ -382,7 +652,7 @@
 
         .quote-mark {
             font-size: 3rem;
-            color: #ffc2d4;
+            color: #c9a0e8;
             line-height: 0.5;
             font-family: Georgia, serif;
             position: absolute;
@@ -394,9 +664,8 @@
         .card-message {
             font-size: 0.95rem;
             line-height: 1.9;
-            color: #5a2a3a;
+            color: #3d1a5c;
             padding: 15px 5px 5px;
-            font-style: italic;
             letter-spacing: 0.3px;
         }
 
@@ -404,7 +673,7 @@
             text-align: right;
             margin-top: 15px;
             font-size: 1.1rem;
-            color: #c0394e;
+            color: #7b2fa8;
             font-style: italic;
         }
 
@@ -412,9 +681,9 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(255, 107, 157, 0.15);
-            border: 1px solid rgba(255, 107, 157, 0.3);
-            color: #ff6b9d;
+            background: rgba(155, 89, 182, 0.15);
+            border: 1px solid rgba(155, 89, 182, 0.3);
+            color: #9b59b6;
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -429,7 +698,7 @@
         }
 
         .close-btn:hover {
-            background: rgba(255, 107, 157, 0.3);
+            background: rgba(155, 89, 182, 0.3);
             transform: scale(1.1) rotate(90deg);
         }
 
@@ -451,9 +720,19 @@
         }
 
         @keyframes rise-heart {
-            0% { transform: translateY(0) scale(0.5) rotate(-15deg); opacity: 1; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-300px) scale(1.2) rotate(15deg); opacity: 0; }
+            0% {
+                transform: translateY(0) scale(0.5) rotate(-15deg);
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-300px) scale(1.2) rotate(15deg);
+                opacity: 0;
+            }
         }
 
         .card-ribbon {
@@ -462,10 +741,9 @@
             right: 30px;
             width: 30px;
             height: 45px;
-            background: linear-gradient(180deg, #ff6b9d, #ff8fab);
-            clip-path: polygon(0 0, 100% 0, 100% 85%,
-                        50% 100%, 0 85%);
-            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+            background: linear-gradient(180deg, #9b59b6, #b07fd4);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
         }
 
         .card-ribbon::after {
@@ -485,22 +763,29 @@
             transform: translateX(-50%);
             width: 50px;
             height: 50px;
-            background: radial-gradient(circle at 35% 35%, #ff8fab, #c0394e);
+            background: radial-gradient(circle at 35% 35%, #c39bd3, #7b2fa8);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
             box-shadow:
-                0 4px 15px rgba(192, 57, 78, 0.5),
+                0 4px 15px rgba(123, 47, 168, 0.5),
                 inset 0 1px 3px rgba(255, 255, 255, 0.3);
             z-index: 10;
             animation: seal-pulse 2s ease-in-out infinite;
         }
 
         @keyframes seal-pulse {
-            0%, 100% { box-shadow: 0 4px 15px rgba(192, 57, 78, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3); }
-            50% { box-shadow: 0 4px 25px rgba(192, 57, 78, 0.7), inset 0 1px 3px rgba(255, 255, 255, 0.3); }
+
+            0%,
+            100% {
+                box-shadow: 0 4px 15px rgba(123, 47, 168, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 4px 25px rgba(123, 47, 168, 0.7), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+            }
         }
 
         .envelope-shine {
@@ -519,33 +804,60 @@
             overflow-y: auto;
             border-radius: 20px;
             scrollbar-width: thin;
-            scrollbar-color: #ffc2d4 transparent;
+            scrollbar-color: #c9a0e8 transparent;
         }
 
-        .card-scroll::-webkit-scrollbar { width: 4px; }
-        .card-scroll::-webkit-scrollbar-track { background: transparent; }
-        .card-scroll::-webkit-scrollbar-thumb { background: #ffc2d4; border-radius: 2px; }
+        .card-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .card-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .card-scroll::-webkit-scrollbar-thumb {
+            background: #c9a0e8;
+            border-radius: 2px;
+        }
 
         .bottom-note {
-            color: rgba(249, 213, 229, 0.4);
+            color: rgba(220, 190, 250, 0.4);
             font-size: 0.7rem;
             letter-spacing: 2px;
             margin-top: 10px;
         }
 
         @keyframes envelope-shake {
-            0%, 100% { transform: rotate(0deg); }
-            20% { transform: rotate(-2deg); }
-            40% { transform: rotate(2deg); }
-            60% { transform: rotate(-1.5deg); }
-            80% { transform: rotate(1.5deg); }
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            20% {
+                transform: rotate(-2deg);
+            }
+
+            40% {
+                transform: rotate(2deg);
+            }
+
+            60% {
+                transform: rotate(-1.5deg);
+            }
+
+            80% {
+                transform: rotate(1.5deg);
+            }
         }
 
         .envelope-wrapper:not(.opened) {
             animation: envelope-shake 4s ease-in-out 2s infinite;
         }
 
-        .envelope-wrapper.opened { animation: none; }
+        .envelope-wrapper.opened {
+            animation: none;
+        }
     </style>
 </head>
 
@@ -555,40 +867,80 @@
     <div class="particles" id="particles"></div>
     <div class="floating-hearts" id="floatingHearts"></div>
 
-    <div class="scene">
-        <p class="title">✦ A letter for you ✦</p>
+    <!-- ─── Passcode Screen ─────────────────────────────── -->
+    <div class="passcode-screen" id="passcodeScreen">
+        <div class="passcode-box">
+            <div class="passcode-icon">🔮</div>
+            <p class="passcode-title">Enter Passcode</p>
+            <p class="passcode-subtitle">✦ กรอกรหัส 4 หลัก ✦</p>
+
+            <!-- Dots -->
+            <div class="passcode-dots" id="passcodeDots">
+                <div class="passcode-dot" id="dot-0"></div>
+                <div class="passcode-dot" id="dot-1"></div>
+                <div class="passcode-dot" id="dot-2"></div>
+                <div class="passcode-dot" id="dot-3"></div>
+            </div>
+
+            <!-- Error message -->
+            <p class="passcode-error" id="passcodeError">✦ รหัสไม่ถูกต้อง ✦</p>
+
+            <!-- Numpad -->
+            <div class="passcode-numpad">
+                <button class="num-btn" onclick="pressNum('1')">1</button>
+                <button class="num-btn" onclick="pressNum('2')">2</button>
+                <button class="num-btn" onclick="pressNum('3')">3</button>
+                <button class="num-btn" onclick="pressNum('4')">4</button>
+                <button class="num-btn" onclick="pressNum('5')">5</button>
+                <button class="num-btn" onclick="pressNum('6')">6</button>
+                <button class="num-btn" onclick="pressNum('7')">7</button>
+                <button class="num-btn" onclick="pressNum('8')">8</button>
+                <button class="num-btn" onclick="pressNum('9')">9</button>
+                <button class="num-btn empty"></button>
+                <button class="num-btn" onclick="pressNum('0')">0</button>
+                <button class="num-btn delete" onclick="pressDelete()">⌫</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Main Scene ─────────────────────────────────── -->
+    <div class="scene" id="mainScene">
+        <p class="title">✦ A letter for P'Saint ✦</p>
 
         <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
             <div class="envelope" id="envelope">
                 <svg class="envelope-svg" viewBox="0 0 340 240" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="envBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#fff0f5" />
-                            <stop offset="100%" style="stop-color:#ffe4ee" />
+                            <stop offset="0%" style="stop-color:#f5eeff" />
+                            <stop offset="100%" style="stop-color:#e8d5f9" />
                         </linearGradient>
                         <linearGradient id="envFlap" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ffd6e7" />
-                            <stop offset="100%" style="stop-color:#ffb3cc" />
+                            <stop offset="0%" style="stop-color:#dbb8f5" />
+                            <stop offset="100%" style="stop-color:#c39bd3" />
                         </linearGradient>
                         <linearGradient id="envSide" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#ffcce0" />
-                            <stop offset="100%" style="stop-color:#ffe0ee" />
+                            <stop offset="0%" style="stop-color:#d4b0e8" />
+                            <stop offset="100%" style="stop-color:#e8d5f9" />
                         </linearGradient>
                         <filter id="softShadow">
-                            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(255,100,150,0.2)" />
+                            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(140,80,200,0.2)" />
                         </filter>
                     </defs>
                     <rect x="10" y="60" width="320" height="170" rx="10" ry="10" fill="url(#envBody)"
-                        filter="url(#softShadow)" stroke="#ffc2d4" stroke-width="1" />
-                    <polygon points="10,230 170,140 330,230" fill="#ffe4ee" stroke="#ffc2d4" stroke-width="1" />
-                    <polygon points="10,60 10,230 130,145" fill="url(#envSide)" stroke="#ffc2d4" stroke-width="0.5" opacity="0.8" />
-                    <polygon points="330,60 330,230 210,145" fill="url(#envSide)" stroke="#ffc2d4" stroke-width="0.5" opacity="0.8" />
-                    <polygon id="envFlapSvg" points="10,62 170,155 330,62" fill="url(#envFlap)" stroke="#ffc2d4" stroke-width="1" />
-                    <line x1="80" y1="85" x2="170" y2="135" stroke="rgba(255,150,180,0.3)" stroke-width="1" />
-                    <line x1="260" y1="85" x2="170" y2="135" stroke="rgba(255,150,180,0.3)" stroke-width="1" />
-                    <text x="50" y="195" font-size="14" opacity="0.15" fill="#ff6b9d">♥</text>
-                    <text x="280" y="185" font-size="10" opacity="0.15" fill="#ff6b9d">♥</text>
-                    <text x="155" y="210" font-size="8" opacity="0.12" fill="#ff6b9d">♥</text>
+                        filter="url(#softShadow)" stroke="#c9a0e8" stroke-width="1" />
+                    <polygon points="10,230 170,140 330,230" fill="#e8d5f9" stroke="#c9a0e8" stroke-width="1" />
+                    <polygon points="10,60 10,230 130,145" fill="url(#envSide)" stroke="#c9a0e8" stroke-width="0.5"
+                        opacity="0.8" />
+                    <polygon points="330,60 330,230 210,145" fill="url(#envSide)" stroke="#c9a0e8" stroke-width="0.5"
+                        opacity="0.8" />
+                    <polygon id="envFlapSvg" points="10,62 170,155 330,62" fill="url(#envFlap)" stroke="#c9a0e8"
+                        stroke-width="1" />
+                    <line x1="80" y1="85" x2="170" y2="135" stroke="rgba(160,100,210,0.3)" stroke-width="1" />
+                    <line x1="260" y1="85" x2="170" y2="135" stroke="rgba(160,100,210,0.3)" stroke-width="1" />
+                    <text x="50" y="195" font-size="14" opacity="0.15" fill="#9b59b6">♥</text>
+                    <text x="280" y="185" font-size="10" opacity="0.15" fill="#9b59b6">♥</text>
+                    <text x="155" y="210" font-size="8" opacity="0.12" fill="#9b59b6">♥</text>
                 </svg>
                 <div class="envelope-letter-peek" id="letterPeek"></div>
                 <div class="wax-seal" id="waxSeal">💌</div>
@@ -600,6 +952,7 @@
         <p class="bottom-note">✦ ✦ ✦</p>
     </div>
 
+    <!-- Card Modal -->
     <!-- Card Modal -->
     <div class="card-overlay" id="cardOverlay">
         <div class="card-scroll">
@@ -614,12 +967,12 @@
                 <button class="close-btn" onclick="closeCard()">✕</button>
 
                 <div class="card-header">
-                    <p class="card-from">✦ with love ✦</p>
-                    <h2 class="card-to">To my dearest,<br>แฟนสาวคนสวย 🌸</h2>
+                    <p class="card-from">✦ Letter ✦</p>
+                    <h2 class="card-to">To My Sister,<br>P'Saint 🌸</h2>
                     <div class="card-hearts">
-                        <span class="card-heart">💕</span>
-                        <span class="card-heart">🌸</span>
-                        <span class="card-heart">💕</span>
+                        <span class="card-heart">💜</span>
+                        <span class="card-heart">✨</span>
+                        <span class="card-heart">💜</span>
                     </div>
                 </div>
 
@@ -631,26 +984,22 @@
                         <div class="carousel-track" id="carouselTrack">
                             <div class="carousel-slide slide-1">
                                 <div class="slide-content">
-                                    <span class="slide-emoji">📸</span>
-                                    <span class="slide-caption">วันที่เราพบกันครั้งแรก</span>
+                                    <img style="width:auto" src="0C60E5FB-AF73-48D6-9E2D-FEAF77521F18_1_105_c.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-2">
                                 <div class="slide-content">
-                                    <span class="slide-emoji">🌅</span>
-                                    <span class="slide-caption">วันที่สวยที่สุดในชีวิต</span>
+                                    <img style="width:auto" src="9EA7F377-5E39-44DE-9314-98FD704EF517_1_105_c.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-3">
                                 <div class="slide-content">
-                                    <span class="slide-emoji">🌙</span>
-                                    <span class="slide-caption">คืนดาวที่เราคุยไม่หยุด</span>
+                                    <img style="width:100%;" src="907CA210-0395-4ABD-85A9-FBFB84223948.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-4">
                                 <div class="slide-content">
-                                    <span class="slide-emoji">🌸</span>
-                                    <span class="slide-caption">ทุกวันที่มีเธออยู่ด้วย</span>
+                                    <img style="width:100%;" src="A0322985-4933-4C21-8F80-67812DA9610F_1_105_c.jpeg">
                                 </div>
                             </div>
                         </div>
@@ -660,20 +1009,22 @@
                 <div class="card-divider"></div>
 
                 <div class="card-text-section">
-                    <p class="card-text-label">✦ จากใจถึงใจ ✦</p>
+                    <p class="card-text-label">✦✦✦✦✦✦✦✦✦✦</p>
                     <div class="card-text-body">
                         <span class="quote-mark">"</span>
                         <p class="card-message">
-                            ไม่รู้จะเริ่มยังไงดี แต่รู้แค่ว่า...
-                            ทุกเช้าที่ตื่นขึ้นมา สิ่งแรกที่คิดถึงคือเธอเสมอ 🌸
+                            ดีจ้าาา พี่เซ้นต์ 🐱 วันสุดท้ายแล้วสินะของการทำงานที่ InsightEra
+                            เอาจริงไม่คิดว่าจะเร็วขนาดนี้ ไม่มีใครอยากให้เกิดขึ้นหรอก แต่ทำไงได้ละเนอะ
                             <br><br>
-                            เธอทำให้วันธรรมดา ๆ กลายเป็นวันพิเศษ
-                            แค่ยิ้มของเธอก็ทำให้หัวใจเต้นแรงขึ้นทุกที
+                            เอาเป็นว่า ขอให้พี่เซ้นต์โชคดีนะ 🍀 ใจเรามันนักสู้อยู่ละ
+                            เชื่อว่าพี่ตั้งใจทำอะไรก็ทำได้อยู่แล้ว
+                            บางทีการได้ออกไปก็อาจจะได้เจอสิ่งที่ดีและแฮปปี้กว่านี้ก็ได้
                             <br><br>
-                            ขอบคุณที่อยู่ข้าง ๆ กัน ขอบคุณสำหรับทุกอย่าง
-                            และถ้าได้เลือกใหม่ ก็จะเลือกเธออีกครั้งเสมอ 💕
+                            สุดท้ายนี้...ขอบคุณที่อยู่ด้วยกันในหลายๆช่วงเวลาที่ได้ทำงานที่นี่ ขอบคุณสำหรับทุกอย่าง
+                            ไม่ว่ายังไงก็ตาม ยังไงก็คุยได้เรื่อยๆ หรือนัดเจอกันได้ ทั้งภูมิและเพื่อนๆพี่ๆน้องๆ พร้อมเสมอ
+                            💜
                         </p>
-                        <p class="card-signature">— ด้วยรักและคิดถึง, ฉัน 🌙</p>
+                        <p class="card-signature">PooM 🧸</p>
                     </div>
                 </div>
 
@@ -702,7 +1053,7 @@
         // ─── Generate Particles ───────────────────────────────────
         const particlesContainer = document.getElementById('particles');
         const particleSymbols = ['♥', '✦', '✿', '·', '❀'];
-        const particleColors = ['#ff6b9d', '#ffc2d4', '#ff8fab', '#ffb3cc', '#fff0f5'];
+        const particleColors = ['#9b59b6', '#c9a0e8', '#b07fd4', '#dbb8f5', '#f5eeff'];
 
         for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
@@ -722,6 +1073,85 @@
             particlesContainer.appendChild(particle);
         }
 
+        // ─── Passcode Logic ───────────────────────────────────────
+        const CORRECT_CODE = '2009';
+        let inputCode = '';
+
+        function pressNum(num) {
+            // ไม่รับเพิ่มถ้าครบ 4 แล้ว
+            if (inputCode.length >= 4) return;
+
+            inputCode += num;
+            updateDots();
+
+            // ตรวจสอบเมื่อครบ 4 หลัก
+            if (inputCode.length === 4) {
+                setTimeout(checkPasscode, 200);
+            }
+        }
+
+        function pressDelete() {
+            if (inputCode.length === 0) return;
+            inputCode = inputCode.slice(0, -1);
+            updateDots();
+            // ซ่อน error เมื่อลบ
+            document.getElementById('passcodeError').classList.remove('show');
+        }
+
+        function updateDots() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                dot.classList.remove('filled', 'error');
+                if (i < inputCode.length) {
+                    dot.classList.add('filled');
+                }
+            }
+        }
+
+        function checkPasscode() {
+            if (inputCode === CORRECT_CODE) {
+                // ✅ ถูกต้อง — เปลี่ยนสี dots เป็นสีเขียวชั่วครู่แล้วเข้าหน้าหลัก
+                for (let i = 0; i < 4; i++) {
+                    const dot = document.getElementById(`dot-${i}`);
+                    dot.style.background = '#2ecc71';
+                    dot.style.borderColor = '#2ecc71';
+                    dot.style.boxShadow = '0 0 10px rgba(46, 204, 113, 0.6)';
+                }
+                setTimeout(() => {
+                    // ซ่อน passcode screen
+                    document.getElementById('passcodeScreen').classList.add('hide');
+                    // แสดง main scene
+                    document.getElementById('mainScene').classList.add('show');
+                }, 500);
+
+            } else {
+                // ❌ ผิด — แสดง error + shake + reset
+                const dotsEl = document.getElementById('passcodeDots');
+
+                for (let i = 0; i < 4; i++) {
+                    document.getElementById(`dot-${i}`).classList.add('error');
+                }
+
+                dotsEl.classList.add('shake');
+                document.getElementById('passcodeError').classList.add('show');
+
+                setTimeout(() => {
+                    dotsEl.classList.remove('shake');
+                    inputCode = '';
+                    updateDots();
+                }, 600);
+            }
+        }
+
+        // รองรับ keyboard input ด้วย
+        document.addEventListener('keydown', (e) => {
+            // ถ้า passcode screen ยังแสดงอยู่
+            if (!document.getElementById('passcodeScreen').classList.contains('hide')) {
+                if (e.key >= '0' && e.key <= '9') pressNum(e.key);
+                if (e.key === 'Backspace') pressDelete();
+            }
+        });
+
         // ─── Carousel Logic ───────────────────────────────────────
         let currentSlide = 0;
         const totalSlides = 4;
@@ -733,7 +1163,6 @@
         }
 
         function startAutoSlide() {
-            // ✅ clear ก่อนเสมอ ป้องกัน timer ซ้อนกัน
             clearInterval(autoSlideTimer);
             autoSlideTimer = setInterval(() => {
                 currentSlide = (currentSlide + 1) % totalSlides;
@@ -772,11 +1201,9 @@
 
             envelope.classList.add('opening');
 
-            // ✅ เปิด card แล้ว startAutoSlide ตรงๆ ไม่ง้อ transitionend
             setTimeout(() => {
                 document.getElementById('cardOverlay').classList.add('show');
                 spawnFloatingHearts();
-                // ✅ รอให้ card animation เสร็จก่อนค่อย start
                 setTimeout(startAutoSlide, 600);
             }, 900);
         }
@@ -785,7 +1212,6 @@
             const overlay = document.getElementById('cardOverlay');
             overlay.classList.remove('show');
 
-            // ✅ หยุด timer ทันทีเมื่อปิด
             stopAutoSlide();
 
             setTimeout(() => {
@@ -821,7 +1247,7 @@
         // ─── Floating Hearts on Open ──────────────────────────────
         function spawnFloatingHearts() {
             const container = document.getElementById('floatingHearts');
-            const heartSymbols = ['💕', '💗', '💖', '🌸', '✨', '💝', '💓'];
+            const heartSymbols = ['💜', '✨', '💫', '🌸', '⭐', '💝', '🔮'];
 
             for (let i = 0; i < 15; i++) {
                 setTimeout(() => {
@@ -843,4 +1269,5 @@
 
     </script>
 </body>
+
 </html>
