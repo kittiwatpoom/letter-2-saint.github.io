@@ -874,10 +874,138 @@
         .envelope-wrapper.opened {
             animation: none;
         }
+
+        /* Button */
+        :root {
+            --pink-200: #fbcfe8;
+            --pink-400: #f472b6;
+            --pink-600: #db2777;
+            --gray-400: #9ca3af;
+        }
+
+        #musicBtn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 9999;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            border: 2px solid var(--pink-200);
+            background: rgba(255, 255, 255, .9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .12);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transform: scale(0);
+            opacity: 0;
+            animation: btnIn .4s ease forwards;
+            animation-delay: 1s;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        #musicBtn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, .16);
+        }
+
+        @keyframes btnIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .iconWrap {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+
+        .icon {
+            position: absolute;
+            inset: 0;
+            transition: transform .2s ease, opacity .2s ease;
+        }
+
+        .hidden {
+            transform: scale(0) rotate(180deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 999px;
+            border: 2px solid var(--pink-400);
+            opacity: 0;
+        }
+
+        .ring.playing {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: .5;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: .5;
+            }
+        }
+
+        /* ซ่อน player แบบพาออกจอ (ไม่ใช้ display:none) */
+        #player {
+            position: fixed;
+            left: -9999px;
+            top: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
     </style>
 </head>
 
 <body>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!--button-->
+    <button id="musicBtn" title="ปิดเพลง" aria-label="music toggle">
+        <span class="iconWrap">
+            <span id="ring" class="ring"></span>
+
+            <!-- volume on -->
+            <span id="iconOn" class="icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--pink-600)" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 5 6 9H2v6h4l5 4V5z"></path>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+            </span>
+
+            <!-- volume off -->
+            <span id="iconOff" class="icon hidden">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--gray-400)" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 5 6 9H2v6h4l5 4V5z"></path>
+                    <path d="m23 9-6 6"></path>
+                    <path d="m17 9 6 6"></path>
+                </svg>
+            </span>
+        </span>
+    </button>
+    <div id="player"></div>
 
     <div class="stars" id="stars"></div>
     <div class="particles" id="particles"></div>
@@ -1015,27 +1143,32 @@
                             </div>
                             <div class="carousel-slide slide-4">
                                 <div class="slide-content">
-                                    <img style="width:100%;" src="img/A0322985-4933-4C21-8F80-67812DA9610F_1_105_c.jpeg">
+                                    <img style="width:100%;"
+                                        src="img/A0322985-4933-4C21-8F80-67812DA9610F_1_105_c.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-5">
                                 <div class="slide-content">
-                                    <img style="width:100%;" src="img/8C258917-BE9D-442B-B6A1-CBF4242A174B_1_105_c.jpeg">
+                                    <img style="width:100%;"
+                                        src="img/8C258917-BE9D-442B-B6A1-CBF4242A174B_1_105_c.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-6">
                                 <div class="slide-content">
-                                    <img style="width:100%;" src="img/64DC5A77-DDD6-45E7-AFC1-AFADA3DC1DE4_1_105_c.jpeg">
+                                    <img style="width:100%;"
+                                        src="img/64DC5A77-DDD6-45E7-AFC1-AFADA3DC1DE4_1_105_c.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-7">
                                 <div class="slide-content">
-                                    <img style="width:100%;" src="img/521CA0B9-10BA-4477-90B9-C8E4F70F83A8_1_105_c.jpeg">
+                                    <img style="width:100%;"
+                                        src="img/521CA0B9-10BA-4477-90B9-C8E4F70F83A8_1_105_c.jpeg">
                                 </div>
                             </div>
                             <div class="carousel-slide slide-8">
                                 <div class="slide-content">
-                                    <img style="width:100%;" src="img/F03222C6-3EA5-45F5-8BE7-FBCF4488EC1E_1_105_c.jpeg">
+                                    <img style="width:100%;"
+                                        src="img/F03222C6-3EA5-45F5-8BE7-FBCF4488EC1E_1_105_c.jpeg">
                                 </div>
                             </div>
                         </div>
@@ -1052,12 +1185,16 @@
                             ดีจ้าาา พี่เซ้นต์ 🐱 วันสุดท้ายแล้วสินะของการทำงานที่ InsightEra
                             เอาจริงไม่คิดว่าจะเร็วขนาดนี้ ไม่มีใครอยากให้เกิดขึ้นหรอก แต่ทำไงได้ละเนอะ
                             <br><br>
-                            เอาเป็นว่า ขอให้พี่เซ้นต์โชคดีนะ 🍀 ใจเรามันนักสู้อยู่ละ เชื่อว่าพี่ตั้งใจทำอะไรก็ทำได้อยู่แล้ว
+                            เอาเป็นว่า ขอให้พี่เซ้นต์โชคดีนะ 🍀 ใจเรามันนักสู้อยู่ละ
+                            เชื่อว่าพี่ตั้งใจทำอะไรก็ทำได้อยู่แล้ว
                             บางทีการได้ออกไปก็อาจจะได้เจอสิ่งที่ดีและแฮปปี้กว่านี้ก็ได้
-                            แล้วก็ขอให้ดูแลสุขภาพกายสุขภาพใจด้วยนะพี่ 🏃‍♀️ ออกกำลังกายบ้าง กินดีแล้วแหละ แต่อยากให้ขยับร่างกายเพิ่มด้วย นอกจากสุขภาพกายดี Mental ก็จะดีด้วย
-                            ไว้วันไหนว่าง เดี๋ยวชวนไปวิ่งดีกว่า และก็ไม่ต้องเป็นห่วงว่าคนที่อยู่ต่อจะเป็นยังไง เดี๋ยวจะดูแลคนอื่นๆให้นะ อาจจะไม่ใช่ทุกเรื่องก็ตาม
+                            แล้วก็ขอให้ดูแลสุขภาพกายสุขภาพใจด้วยนะพี่ 🏃‍♀️ ออกกำลังกายบ้าง กินดีแล้วแหละ
+                            แต่อยากให้ขยับร่างกายเพิ่มด้วย นอกจากสุขภาพกายดี Mental ก็จะดีด้วย
+                            ไว้วันไหนว่าง เดี๋ยวชวนไปวิ่งดีกว่า และก็ไม่ต้องเป็นห่วงว่าคนที่อยู่ต่อจะเป็นยังไง
+                            เดี๋ยวจะดูแลคนอื่นๆให้นะ อาจจะไม่ใช่ทุกเรื่องก็ตาม
                             <br><br>
-                            สุดท้ายนี้...ขอบคุณที่อยู่ด้วยกันในหลายๆช่วงเวลาที่ได้ทำงานที่นี่ ขอบคุณสำหรับทุกอย่างเลย พี่เป็นเหมือนพี่สาว เป็นเพื่อน เป็นแม่ที่คอยดูแลกันและกัน
+                            สุดท้ายนี้...ขอบคุณที่อยู่ด้วยกันในหลายๆช่วงเวลาที่ได้ทำงานที่นี่ ขอบคุณสำหรับทุกอย่างเลย
+                            พี่เป็นเหมือนพี่สาว เป็นเพื่อน เป็นแม่ที่คอยดูแลกันและกัน
                             ไม่ว่ายังไงก็ตาม ยังไงก็คุยได้เรื่อยๆ หรือนัดเจอกันได้ ทั้งภูมิและเพื่อนๆพี่ๆน้องๆ พร้อมเสมอ
                             💜
                             <br><br>
@@ -1305,7 +1442,99 @@
                 }, i * 120);
             }
         }
+        
+        (() => {
+            const VIDEO_ID = "6PClEtdn_U8";
+            const DEFAULT_VOLUME = 70; // 0-100
 
+            const btn = document.getElementById("musicBtn");
+            const iconOn = document.getElementById("iconOn");
+            const iconOff = document.getElementById("iconOff");
+            const ring = document.getElementById("ring");
+
+            let player = null;
+            let isMuted = false;
+            let isPlaying = false;
+
+            function syncUI() {
+                if (isMuted) {
+                    iconOn.classList.add("hidden");
+                    iconOff.classList.remove("hidden");
+                    btn.title = "เปิดเพลง";
+                } else {
+                    iconOff.classList.add("hidden");
+                    iconOn.classList.remove("hidden");
+                    btn.title = "ปิดเพลง";
+                }
+
+                if (!isMuted && isPlaying) ring.classList.add("playing");
+                else ring.classList.remove("playing");
+            }
+
+            // YouTube API callback
+            window.onYouTubeIframeAPIReady = function () {
+                player = new YT.Player("player", {
+                    videoId: VIDEO_ID,
+                    width: 1,
+                    height: 1,
+                    playerVars: {
+                        autoplay: 1,      // จะพยายาม autoplay
+                        loop: 1,
+                        playlist: VIDEO_ID, // ต้องมีเพื่อให้ loop ทำงาน
+                        controls: 0,
+                        playsinline: 1
+                    },
+                    events: {
+                        onReady: () => {
+                            player.setVolume(DEFAULT_VOLUME);
+                            // พยายามเล่น (อาจโดนบล็อกถ้าไม่มี user gesture)
+                            try { player.playVideo(); } catch (e) { }
+                        },
+                        onStateChange: (e) => {
+                            // 1 = playing, 2 = paused
+                            isPlaying = (e.data === YT.PlayerState.PLAYING);
+                            syncUI();
+                        }
+                    }
+                });
+            };
+
+            // คลิก/แตะที่ไหนก็ได้เพื่อเริ่ม ถ้า autoplay โดนบล็อก
+            function handleInteraction() {
+                if (!player || isMuted) return;
+                try {
+                    player.unMute();
+                    player.setVolume(DEFAULT_VOLUME);
+                    player.playVideo();
+                } catch (e) { }
+            }
+            document.addEventListener("click", handleInteraction);
+            document.addEventListener("touchstart", handleInteraction, { passive: true });
+
+            // ปุ่ม mute/unmute
+            btn.addEventListener("click", (ev) => {
+                ev.stopPropagation();
+                if (!player) return;
+
+                if (isMuted) {
+                    isMuted = false;
+                    try {
+                        player.unMute();
+                        player.setVolume(DEFAULT_VOLUME);
+                        player.playVideo();
+                    } catch (e) { }
+                } else {
+                    isMuted = true;
+                    try {
+                        player.pauseVideo(); // “ปิดเพลง” แบบหยุด
+                        // หรือถ้าต้องการ mute แต่ยังเล่นอยู่: player.mute();
+                    } catch (e) { }
+                }
+                syncUI();
+            });
+
+            syncUI();
+        })();
     </script>
 </body>
 
